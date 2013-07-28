@@ -11,6 +11,7 @@
 #include "HexConversion.h"
 extern "C"{
     #include "mifare.h"
+    #include <string.h>
 }
 static uint8_t keys[] = {
     0xff, 0xff, 0xff, 0xff, 0xff, 0xff,

@@ -10,7 +10,8 @@
 #include "MifareUltralightScanner.h"
 #include "HexConversion.h"
 extern "C"{
-#include "mifare.h"
+    #include "mifare.h"
+    #include <string.h>
 }
 //Tries to scan for a card. If successful return MifareUltralightCard with
 //ready bit set to true.

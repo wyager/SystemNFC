@@ -13,15 +13,8 @@
 #include <nfc/nfc.h>
 #include <vector>
 #include <array>
+#include "nfc_defines.h"
 
-struct bits_container {
-    std::vector<uint8_t> data;
-    int num_bits = 0;
-};
-const nfc_modulation nmMifare = {
-    .nmt = NMT_ISO14443A,
-    .nbr = NBR_106,
-};
 
 
 class MifareClassicCard {

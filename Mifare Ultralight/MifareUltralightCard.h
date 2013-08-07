@@ -13,15 +13,7 @@
 #include <nfc/nfc.h>
 #include <vector>
 #include <array>
-
-struct bits_container {
-    std::vector<uint8_t> data;
-    int num_bits = 0;
-};
-const nfc_modulation nmMifare = {
-    .nmt = NMT_ISO14443A,
-    .nbr = NBR_106,
-};
+#include "nfc_defines.h"
 
 
 class MifareUltralightCard {
@@ -43,7 +35,9 @@ public:
     std::string basic_card_info();
     //Block is 16 bytes
     std::vector<uint8_t> read_block(int block_number);
-    //Page is 4 bytes
+    //Takes just as long as read_block, but only reads 4 bytes at a time.
+    std::vector<uint8_t> read_page(int page_number);
+    //Page is 4 bytes. Returns true on success
     bool write_page(int page_number, std::vector<uint8_t> data);
     
 };

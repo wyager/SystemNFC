@@ -55,6 +55,18 @@ std::vector<uint8_t> MifareUltralightCard::read_block(int block_number){
     return result;
 }
 
+//Reads a 4 byte page. Just as slow as reading a 16 byte block.
+std::vector<uint8_t> MifareUltralightCard::read_page(int page_number){
+    mifare_param mifare_readwrite_information;//Stores information sent to and read from the card.
+    if(!nfc_initiator_mifare_cmd(this->pnd, MC_READ, page_number, &mifare_readwrite_information)){
+        std::cerr << "Error: Failed to read block.\n";
+        return std::vector<uint8_t>();
+    }
+    std::vector<uint8_t> result(4);
+    memcpy(&result[0], mifare_readwrite_information.mpd.abtData, 4);
+    return result;
+}
+
 //Page is 4 bytes. Only 4 bytes can be written at a time.
 bool MifareUltralightCard::write_page(int page_number, std::vector<uint8_t> data){
     if (data.size() != 4) {

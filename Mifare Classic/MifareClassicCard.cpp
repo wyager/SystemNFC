@@ -215,6 +215,7 @@ std::vector<uint8_t> MifareClassicCard::request_for_answer_to_select(){
 
 
 //true on success
+//Will NOT write to trailer blocks. See comments to enable writing to trailer blocks
 bool MifareClassicCard::write_sector(int sector, std::vector<uint8_t> data){
     if(data.size() != 16*4){
         std::cerr << "Data to write to sector is not correct length.\n";
@@ -237,7 +238,7 @@ bool MifareClassicCard::write_sector(int sector, std::vector<uint8_t> data){
         std::cerr << "Only writing to blocks 1-3. Please modify code if you want to write to block 0.\n";
         current_block = 1;
     }
-    for (; current_block < trailer_block; current_block++) {
+    for (; current_block < trailer_block; current_block++) {//Change "<" to "<=" to enable writing to trailer block
         memcpy(block_readwrite_information.mpd.abtData, &data[current_block*16],16);
         if(!nfc_initiator_mifare_cmd(this->pnd, MC_WRITE, current_block, &block_readwrite_information)){
             std::cerr << "Failed to write to  block.\n";
